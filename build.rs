@@ -34,6 +34,12 @@ fn main() {
     let target = env::var("TARGET").unwrap();
     if target.contains("gnu") {
         println!("cargo:rustc-link-lib=stdc++");
+
+        // Link to zlib (pkg-config says its just _z_) and minizip
+        // to fix undefined references.
+        // Also, it doesnt seem to happen on Windows.
+        println!("cargo:rustc-link-lib=z");
+        println!("cargo:rustc-link-lib=minizip");
     } else if target.contains("apple") {
         println!("cargo:rustc-link-lib=c++");
     }
